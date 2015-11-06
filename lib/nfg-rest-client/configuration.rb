@@ -104,6 +104,25 @@ module NfgRestClient
         @@campaign = value
       end
 
+      def token(value = nil)
+        if value.nil?
+          if @token.nil?
+            @@token
+          else
+            @token
+          end
+        else
+          value = CGI::escape(value) if value.present? && !value.include?("%")
+          @token = value
+        end
+      end
+
+      def token=(value)
+        NfgRestClient::Logger.info "\033[1;4;32m#{name}\033[0m token set..."
+        value = CGI::escape(value) if value.present? && !value.include?("%")
+        @@token = value
+      end
+
     end
 
     def self.included(base)
