@@ -26,8 +26,49 @@ Or install it yourself as:
 ### Generating an access token
 
 #### Using the AccessToken model
+Using the AccessToken model in this gem. To generate a production access token you would need to have this gem installed and configured
+in your production code before generating the token using the code below from your production server's console
 
-### Production settings
+```ruby
+at = NfgRestClient::AccessToken.new
+at.create
+at.token
+
+If token is blank, look at
+at.status
+at.message
+```
+#### Using Curl
+Using a curl statement. You should run this both for the sandbox from any development machine with whitelisted IP addresses,
+and your production server(s) that have also been whitelisted
+
+For the sandbox
+```
+curl --include \
+     --request POST \
+     --header "Content-Type: application/json" \
+     --data-binary "{
+    \"source\": \"YOUR_SOURCE\",
+    \"userid\": \"YOUR USERID\",
+    \"password\": \"YOUR_PASSWORD\",
+    \"scope\": \"donation donation-reporting\"
+}" \
+'https://api-sandbox.networkforgood.org/access/rest/token'
+```
+
+For production
+```
+curl --include \
+     --request POST \
+     --header "Content-Type: application/json" \
+     --data-binary "{
+    \"source\": \"YOUR_SOURCE\",
+    \"userid\": \"YOUR USERID\",
+    \"password\": \"YOUR_PASSWORD\",
+    \"scope\": \"donation donation-reporting\"
+}" \
+'https://api.networkforgood.org/access/rest/token'
+```
 
 ## Development
 
