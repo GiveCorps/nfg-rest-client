@@ -1,8 +1,5 @@
-# Nfg::Rest::Client
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/nfg/rest/client`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+#NfgRestClient
+The NfgRestClient gem is a wrapper for NetworkForGood's restful donation API. Using the Flexirest gem (https://github.com/andyjeffries/flexirest), the NfgRestClient makes it simple to consume the donation API for both retrieving information and creating donations and donors.
 
 ## Installation
 
@@ -22,7 +19,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Obtaining a partner account at NetworkforGood
+
+### Generate the configuration initializer
+
+### Generating an access token
+
+#### Using the AccessToken model
+
+### Production settings
 
 ## Development
 
