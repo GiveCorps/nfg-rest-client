@@ -9,6 +9,6 @@ module NfgRestClient
       self.scope = "donation donation-reporting"
     end
 
-    post :create, "/token"
+    post :create, "token"
   end
 end

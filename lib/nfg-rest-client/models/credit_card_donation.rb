@@ -1,7 +1,7 @@
 module NfgRestClient
-  class CreditCardDonation < NfgRestClient::TransactionBase
+  class CreditCardDonation < TransactionBase
     validates :donationLineItems, presence: true
 
-    post :create 'donation'
+    post :create, 'donation'
   end
 end

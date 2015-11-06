@@ -4,7 +4,8 @@ require 'nfg-rest-client/configuration'
 require 'flexirest'
 require 'nfg-rest-client/models/base'
 require 'nfg-rest-client/models/access_token'
-
+require 'nfg-rest-client/models/base_transaction'
+require 'nfg-rest-client/models/credit_card_donation'
 
 # require 'nfg-rest-client/utils'
 # require 'nfg-rest-client/client'
