@@ -1,8 +1,8 @@
 module NfgRestClient
   module Configuration
     module ClassMethods
-      @@sandbox_nfg_base_url = "https://api-sandbox.networkforgood.org/access/rest/"
-      @@production_nfg_base_url = "https://api.networkforgood.org/access/rest/"
+      @@sandbox_nfg_base_url = "https://api-sandbox.networkforgood.org/:request_type/rest"
+      @@production_nfg_base_url = "https://api.networkforgood.org/:request_type/rest"
       @@use_sandbox = true
       @@userid = nil
       @@password = nil
@@ -28,6 +28,14 @@ module NfgRestClient
         else
           @@production_nfg_base_url
         end
+      end
+
+      def base_nfg_access_url
+        base_nfg_url.gsub ":request_type", "access"
+      end
+
+      def base_nfg_service_url
+        base_nfg_url.gsub! ":request_type", "service"
       end
 
       def userid(value = nil)

@@ -1,9 +1,9 @@
 module NfgRestClient
   class Base < Flexirest::Base
     include Configuration
-    self.base_url = base_nfg_url
+    self.request_body_type = :json
 
-    def initialize(args = {})
+    def initialize(attrs={})
       super
       self.userid = self.class.userid
       self.source = self.class.source
@@ -16,5 +16,8 @@ module NfgRestClient
     def error_details
       errorDetails
     end
+
+    private
+
   end
 end
