@@ -35,7 +35,7 @@ module NfgRestClient
       end
 
       def base_nfg_service_url
-        base_nfg_url.gsub! ":request_type", "service"
+        base_nfg_url.gsub ":request_type", "service"
       end
 
       def userid(value = nil)
