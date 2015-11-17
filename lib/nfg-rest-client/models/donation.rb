@@ -1,8 +1,9 @@
 module NfgRestClient
-  class Donation < BaseTransaction
+  class Donation < Base
 
     verbose! # comment this out or set to false to turn off verbose reporting
-
+    self.base_url base_nfg_service_url
+    
     REQUIRED_ATTRIBUTES = %w{ donation_line_items total_amount tip_amount partner_transaction_id payment}
 
     def initialize(attrs={})

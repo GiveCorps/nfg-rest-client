@@ -1,6 +1,7 @@
 module NfgRestClient
-  class AccessToken < BaseAccess
+  class AccessToken < Base
     verbose!
+    self.base_url base_nfg_access_url
 
     def initialize(attrs={})
       super
