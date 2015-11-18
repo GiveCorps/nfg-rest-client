@@ -9,7 +9,6 @@ module NfgRestClient
       # convert all keys to camelcase with leading lowercase character
       attrs.deep_transform_keys!{ |key| key.to_s.camelcase(:lower) }
       super
-      self.token = self.class.token
     end
 
     validates :donationLineItems, presence: true
