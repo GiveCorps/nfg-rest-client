@@ -1,5 +1,5 @@
 module NfgRestClient
-  class DonationLineItem < Base
+  class DonationLineItem < Flexirest::Base
 
 
     def initialize(attrs={})
