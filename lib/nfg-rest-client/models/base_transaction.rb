@@ -5,7 +5,7 @@ module NfgRestClient
     private
 
     def add_authentication_details(name, request)
-      request.headers["Authorization"] = "Bearer #{self.class.token}"
+      request.headers["Authorization:Bearer"] = "#{self.class.token}"
     end
   end
 end
