@@ -9,6 +9,12 @@ module NfgRestClient
     end
 
     validates :organizationId, presence: true
+    validates :organizationIdType, presence: true
+    validates :donorPrivacy, presence: true
+    validates :amount, presence: true
+    validates :feeAddOrDeduct, presence: true
+    validates :transactionType, presence: true
+    validates :recurrence, presence: true
 
     private
 

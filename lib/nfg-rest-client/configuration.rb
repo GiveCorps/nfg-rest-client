@@ -8,6 +8,7 @@ module NfgRestClient
       @@password = nil
       @@source = nil
       @@scope = nil
+      @@token = nil
       @@campaign = "DNTAPI"
 
       def use_sandbox

@@ -50,7 +50,18 @@ end
 
 def valid_attributes
   hsh = {
-    "donation_line_items" => [{ "organizationId" => "541037615" }],
+    "donation_line_items" => [
+        {  "organizationId" => "590624430",
+          "organizationIdType" => "Ein",
+          "designation" => "Project A",
+          "dedication" => "In honor of grandma",
+          "donorPrivacy" => "ProvideAll",
+          "amount" => "12.00",
+          "feeAddOrDeduct" => "Deduct",
+          "transactionType" => "Donation",
+          "recurrence" => "NotRecurring" 
+        }
+    ],
     "total_amount" => 100,
     "tip_amount" => 0.0,
     "partner_transaction_id" => "__unique_transaction_id__",
