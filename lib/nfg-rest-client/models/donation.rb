@@ -33,7 +33,7 @@ module NfgRestClient
       donation_line_items.each_with_index do |donation_line_item, index|
         dli = NfgRestClient::DonationLineItem.new(donation_line_item)
         if !dli.valid?
-          object._errors[field_name] << "record #{ index } returned the following errors "
+          object._errors[field_name] << "record #{ index } returned the following errors #{ dli.full_error_messages }"
         end
       end
 
