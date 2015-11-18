@@ -17,6 +17,13 @@ module NfgRestClient
       errorDetails
     end
 
+    def full_error_messages
+      return "" unless errors.present?
+      errors.reduce([]) do |memo, (field, error)|
+        memo << "#{field.to_s} #{error}"
+      end
+    end
+
     private
 
   end

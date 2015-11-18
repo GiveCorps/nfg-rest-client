@@ -1,48 +1,51 @@
 require "spec_helper"
 
 shared_examples_for "a donation object" do
-  NfgRestClient::Donation.required_attributes.each do |method_name|
-    it "will raise an error unless the hash includes a non-nil value for #{method_name} or #{method_name.camelcase(:lower)} " do
-      expect{ NfgRestClient::Donation.new(create_object(method_name, format)) }.to raise_error(NoMethodError)
-    end
+
+  context "when passing in a hash of attributes" do
+    
   end
 
-  it "should be not raise an error if all of the keys are present and have values" do
-    expect{ NfgRestClient::Donation.new(create_object(nil, format)) }.not_to raise_error
+  it "should be valid if all of the keys are present and have appropriate values" do
+    expect(donation).to be_valid
+  end
+
+  context 'when donationLineItems is not an array' do
+    it "should not be valid" do
+      
+    end
   end
 end
 
 describe NfgRestClient::Donation do
-  let(:donation) { NfgRestClient::Donation.new }
+  let(:donation) { NfgRestClient::Donation.new(donation_attributes(changes_to_attributes,  "underscore")) }
+  let(:changes_to_attributes) { {} }
   subject { donation }
 
   it { validate_presence_of donation, :donationLineItems }
-  it { validate_presence_of donation, :total_amount }
-  it { validate_presence_of donation, :tip_amount }
-  it { validate_presence_of donation, :partner_transaction_id }
+  it { validate_presence_of donation, :totalAmount }
+  it { validate_presence_of donation, :tipAmount }
+  it { validate_presence_of donation, :partnerTransactionId }
   it { validate_presence_of donation, :payment }
 
+  context "when provided an hash with underscore separated keys" do
+  let(:donation) { NfgRestClient::Donation.new(attributes) }
+  let(:attributes) { donation_attributes(changes_to_attributes,  "underscore") }
 
-  describe "initilization" do
+    it_should_behave_like "a donation object"
+  end
 
-    context "when provided an hash with underscore separated keys" do
-      let(:format) { "underscore" }
+  context "when provided an hash with camelcase and leading lowercase keys" do
+    let(:donation) { NfgRestClient::Donation.new(attributes) }
+    let(:attributes) { donation_attributes(changes_to_attributes,  "camelcase") }
 
-      # it_should_behave_like "a donation object"
-    end
-
-    context "when provided an hash with camelcase and leading lowercase keys" do
-      let(:format) { "camelcase" }
-
-      # it_should_behave_like "a donation object"
-    end
+    it_should_behave_like "a donation object"
   end
 
 end
 
-def create_object(method_that_is_missing = nil, style = 'underscore')
-  hsh = method_that_is_missing.present? ? valid_attributes.delete_if { |k, v| k = method_that_is_missing } : valid_attributes
-  style == 'underscore' ? hsh : hsh.inject({}) { |memo, (k, v)| memo[k.camelcase(:lower)] = v; memo }
+def donation_attributes(items_to_be_merged = {}, style = 'underscore')
+  (style == 'underscore' ? valid_attributes : valid_attributes.inject({}) { |memo, (k, v)| memo[k.camelcase(:lower)] = v; memo }).merge(items_to_be_merged)
 end
 
 def valid_attributes
@@ -53,9 +56,4 @@ def valid_attributes
     "partner_transaction_id" => "__unique_transaction_id__",
     "payment" => { "source" => "CardOnFile"}
   }
-end
-
-def validate_presence_of(obj, attribute)
-  obj.valid?
-  expect(obj.errors[attribute]).to include("must be present")
 end
