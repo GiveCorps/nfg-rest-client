@@ -3,8 +3,8 @@ module NfgRestClient
     before_request :add_authentication_details
 
     def initialize(attrs={})
-      self.campaign = self.class.campaign
       super
+      self.campaign = self.class.campaign
     end
 
     private

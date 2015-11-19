@@ -6,6 +6,7 @@
 NfgRestClient::Base.password = "nfg-password"
 NfgRestClient::Base.userid =  "nfg-userid"
 NfgRestClient::Base.source = "nfg-source"
+NfgRestClient::Base.campaign = "nfg-campaign"
 
 # Please refer to the Readme doc for instructions on obtaining
 # a sandbox and production token (they will be different)
