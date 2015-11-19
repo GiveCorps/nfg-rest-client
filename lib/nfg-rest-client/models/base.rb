@@ -5,7 +5,6 @@ module NfgRestClient
 
     def initialize(attrs={})
       super
-      self.userid = self.class.userid
       self.source = self.class.source
     end
 

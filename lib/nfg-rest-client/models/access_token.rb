@@ -5,6 +5,7 @@ module NfgRestClient
 
     def initialize(attrs={})
       super
+      self.userid = self.class.userid
       self.password = self.class.password
       self.scope = "donation donation-reporting"
     end
