@@ -43,6 +43,16 @@ describe NfgRestClient::Donation do
     it_should_behave_like "a donation object"
   end
 
+  describe "sub model instantiation" do
+    describe "donation line items" do
+      it "should instantiate a donation_line_item object for each item in the donation_line_items array " do
+        dli = NfgRestClient::DonationLineItem.new
+        NfgRestClient::DonationLineItem.expects(:new).times(valid_attributes["donation_line_items"].count).returns(dli)
+        donation
+      end
+    end
+  end
+
 end
 
 def donation_attributes(items_to_be_merged = {}, style = 'underscore')
