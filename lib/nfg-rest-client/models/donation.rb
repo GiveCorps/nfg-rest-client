@@ -37,8 +37,6 @@ module NfgRestClient
           object._errors[field_name] << "record #{ index } returned the following errors #{ donation_line_item.full_error_messages }"
         end
       end
-
-
     end
 
     post :create, '/donation'
@@ -46,7 +44,7 @@ module NfgRestClient
     private
 
     def instantiate_donation_line_items(donation_line_items)
-      # return [{"wow" => "that"}]
+      return unless donation_line_items
       donation_line_items.map do |donation_line_item_hash|
         NfgRestClient::DonationLineItem.new(donation_line_item_hash)
       end
