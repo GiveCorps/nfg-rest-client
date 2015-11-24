@@ -3,12 +3,14 @@ module NfgRestClient
 
     verbose! # comment this out or set to false to turn off verbose reporting
     self.base_url base_nfg_service_url
-    
+
 
     def initialize(attrs={})
       # convert all keys to camelcase with leading lowercase character
       attrs.deep_transform_keys!{ |key| key.to_s.camelcase(:lower) }
       super
+      # self.donationLineItems = [{"wow" => "this"}]
+      self.donationLineItems = instantiate_donation_line_items(self.donationLineItems)
     end
 
     validates :donationLineItems, presence: true
@@ -29,10 +31,10 @@ module NfgRestClient
         next
       end
 
-      donation_line_items.each_with_index do |donation_line_item, index|
-        dli = NfgRestClient::DonationLineItem.new(donation_line_item)
-        if !dli.valid?
-          object._errors[field_name] << "record #{ index } returned the following errors #{ dli.full_error_messages }"
+      donation_line_items.each_with_index do |donation_line_item_hash, index|
+        donation_line_item = NfgRestClient::DonationLineItem.new(donation_line_item_hash)
+        if !donation_line_item.valid?
+          object._errors[field_name] << "record #{ index } returned the following errors #{ donation_line_item.full_error_messages }"
         end
       end
 
@@ -43,5 +45,11 @@ module NfgRestClient
 
     private
 
+    def instantiate_donation_line_items(donation_line_items)
+      # return [{"wow" => "that"}]
+      donation_line_items.map do |donation_line_item_hash|
+        NfgRestClient::DonationLineItem.new(donation_line_item_hash)
+      end
+    end
   end
 end

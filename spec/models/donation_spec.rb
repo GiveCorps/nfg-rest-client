@@ -3,16 +3,17 @@ require "spec_helper"
 shared_examples_for "a donation object" do
 
   context "when passing in a hash of attributes" do
-    
+
   end
 
   it "should be valid if all of the keys are present and have appropriate values" do
+    donation.valid?
     expect(donation).to be_valid
   end
 
   context 'when donationLineItems is not an array' do
     it "should not be valid" do
-      
+
     end
   end
 end
@@ -59,7 +60,15 @@ def valid_attributes
           "amount" => "12.00",
           "feeAddOrDeduct" => "Deduct",
           "transactionType" => "Donation",
-          "recurrence" => "NotRecurring" 
+          "recurrence" => "NotRecurring"
+        },
+
+        {  "organizationId" => "590624430",
+          "organizationIdType" => "Ein",
+          "designation" => "Project A",
+          "amount" => "12.00",
+          "feeAddOrDeduct" => "Deduct",
+          "transactionType" => "Donation",
         }
     ],
     "total_amount" => 100,
