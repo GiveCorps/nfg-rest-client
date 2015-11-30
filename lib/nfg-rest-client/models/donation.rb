@@ -4,13 +4,10 @@ module NfgRestClient
     verbose! # comment this out or set to false to turn off verbose reporting
     self.base_url base_nfg_service_url
 
-
     def initialize(attrs={})
-      # convert all keys to camelcase with leading lowercase character
-      attrs.deep_transform_keys!{ |key| key.to_s.camelcase(:lower) }
       super
-      # self.donationLineItems = [{"wow" => "this"}]
       self.donationLineItems = instantiate_donation_line_items(self.donationLineItems)
+      self.payment = instantiate_payment_method(self.payment)
     end
 
     validates :donationLineItems, presence: true
@@ -21,21 +18,23 @@ module NfgRestClient
 
     validates :donationLineItems do |object, field_name, donation_line_items|
       next if donation_line_items.nil? # should be caught by the presence validator
-      unless donation_line_items.is_a?(Array)
+      if !donation_line_items.is_a?(Array)
         object._errors[field_name] << "must be an array"
-        next
-      end
-
-      if donation_line_items.empty?
+      elsif donation_line_items.empty?
         object._errors[field_name] << "must contain at least one record"
-        next
-      end
-
-      donation_line_items.each_with_index do |donation_line_item_hash, index|
-        donation_line_item = NfgRestClient::DonationLineItem.new(donation_line_item_hash)
-        if !donation_line_item.valid?
-          object._errors[field_name] << "record #{ index } returned the following errors #{ donation_line_item.full_error_messages }"
+      else
+        donation_line_items.each_with_index do |donation_line_item, index|
+          unless donation_line_item.valid?
+            object._errors[field_name] << "record #{ index } returned the following errors #{ donation_line_item.full_error_messages.join(", ") }"
+          end
         end
+      end
+    end
+
+    validates :payment do |object, field_name, payment_method|
+      next if payment_method.nil?
+      unless payment_method.valid?
+        object._errors[field_name] << payment_method.full_error_messages
       end
     end
 
@@ -44,10 +43,15 @@ module NfgRestClient
     private
 
     def instantiate_donation_line_items(donation_line_items)
-      return unless donation_line_items
+      return unless donation_line_items.present? && donation_line_items.is_a?(Array)
       donation_line_items.map do |donation_line_item_hash|
         NfgRestClient::DonationLineItem.new(donation_line_item_hash)
       end
+    end
+
+    def instantiate_payment_method(payment_method)
+      return payment_method unless payment_method.present? && payment_method.is_a?(Hash)
+      "NfgRestClient::#{payment_method["source"]}Payment".constantize.new(payment_method)
     end
   end
 end
