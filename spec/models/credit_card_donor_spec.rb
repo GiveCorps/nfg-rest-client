@@ -11,8 +11,8 @@ describe NfgRestClient::CreditCardDonor do
   it { validate_presence_of donor, :token }
   it { validate_presence_of donor, :email }
 
-  it "should instantiate the billing address" do
-    ba = NfgRestClient::BillingAddress.new(billing_address_params)
+  it "should instantiate the billing address if billing address is present and validate the billing address when valid? is called" do
+    ba = NfgRestClient::BillingAddress.new(cc_billing_address_params)
     ba.expects(:valid?).returns(true)
     NfgRestClient::BillingAddress.expects(:new).returns(ba)
     donor.valid?
@@ -28,11 +28,11 @@ def donor_params
     "lastName" => "Carter",
     "email" => "FrancisGCarter@teleworm.us",
     "phone" => "954-922-6971",
-    "billingAddress" => billing_address_params
+    "billingAddress" => cc_billing_address_params
   }
 end
 
-def billing_address_params
+def cc_billing_address_params
   {
     "street1" => "3731 Pointe Lane",
     "city" => "Hollywood",
