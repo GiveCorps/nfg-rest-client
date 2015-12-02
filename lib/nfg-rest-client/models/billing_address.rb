@@ -9,10 +9,13 @@ module NfgRestClient
 
     validates :street1, presence: true
     validates :city, presence: true
-    validates :state, presence: true do |object, field_name, state|
-      next unless object.country == 'US' && state.present?
-      unless NfgRestClient::CountryState::STATE_CODES.include?(state)
-        object._errors[field_name] << "#{state} is not a valid ansi 2 character code"
+    validates :state do |object, field_name, field|
+      if object.country == 'US' && object.state.nil?
+        object._errors[field_name] << "must be present"
+      elsif object.country == 'US' && !NfgRestClient::CountryState::STATE_CODES.include?(object.state)
+        object._errors[field_name] << "#{object.state} is not a valid ansi 2 character code"
+      elsif object.country != 'US' && NfgRestClient::CountryState::STATE_CODES.include?(object.state)
+        object._errors[field_name] << "#{object.state} is valid US ansi 2 character code but the country is not set to US"
       end
     end
     validates :postalCode, presence: true
