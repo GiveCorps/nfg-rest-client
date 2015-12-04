@@ -228,6 +228,7 @@ credit_card.valid?
 #### Using a Card On File
 
 To use a card on file, you must first create one at NFG. There are two ways to do this.
+
 1. When sending a credit card donation, you can set the payment's storeCardOnFile to true:
 ````ruby
 credit_card_payment = NfgRestClient::CreditCardPayment.new(credit_card_payment_params)
