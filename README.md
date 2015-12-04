@@ -131,7 +131,7 @@ end
 
 The create method will also call valid?, so you can skip the separate step
 
-Donation params can be in the form of a hash:
+Donation params can be in the form of a hash (for more information, see http://docs.networkforgoodapi.apiary.io/#reference/donation/credit-card-donations/make-a-credit-card-or-card-on-file-donation):
 ````ruby
 {
   "donationLineItems" => [{
@@ -253,7 +253,7 @@ else
 end
 ````
 
-The card on file params:
+The card on file params (for more information, see http://docs.networkforgoodapi.apiary.io/#reference/donor/card-on-file-operations/store-a-credit-card-on-file):
 ````ruby
 {
   "donor" => {
