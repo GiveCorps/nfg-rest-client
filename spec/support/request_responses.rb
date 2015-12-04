@@ -1,6 +1,14 @@
 module NfgRestClientStubs
   def stub_successful_credit_card_donation
-    stub_successful_create_action(path: "/service/rest/donation", body: NfgRestClientStubs::RequestResponses.credit_card_donation_success.to_json)
+    stub_successful_create_action(path: "/service/rest/donation", body: NfgRestClientStubs::RequestResponses.donation_success.to_json)
+  end
+
+  def stub_unsuccessful_credit_card_donation
+    stub_successful_create_action(path: "/service/rest/donation", body: NfgRestClientStubs::RequestResponses.donation_failure.to_json)
+  end
+
+  def stub_successful_card_on_file_donation
+    stub_successful_create_action(path: "/service/rest/donation", body: NfgRestClientStubs::RequestResponses.donation_success.to_json)
   end
 
   def stub_successful_create_action(options)
@@ -17,13 +25,29 @@ module NfgRestClientStubs
   end
 
   class RequestResponses
-    def self.credit_card_donation_success(options = {})
+    def self.donation_success(options = {})
       {
         "status" => "Success",
         "message" => "",
         "errorDetails" => [],
         "callDuration" => 7.7473,
         "chargeId" => 3584971,
+        "cardOnFileId" => 0
+      }.merge(options)
+    end
+
+    def self.donation_failure(options = {})
+      {
+        "status" => "ValidationFailed",
+        "message" => "",
+        "errorDetails" => [
+          {
+            "code" => "InvalidCreditCardNumber",
+            "data" => "Credit card checksum validation failed"
+          }
+        ],
+        "callDuration" => 0.05423,
+        "chargeId" => 0,
         "cardOnFileId" => 0
       }.merge(options)
     end

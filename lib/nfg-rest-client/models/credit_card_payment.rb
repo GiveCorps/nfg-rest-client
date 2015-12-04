@@ -26,15 +26,5 @@ module NfgRestClient
     end
 
     private
-
-    def instantiate_donor(donor)
-      return donor unless donor.present? && donor.is_a?(Hash)
-      NfgRestClient::CreditCardDonor.new(donor)
-    end
-
-    def instantiate_credit_card(credit_card)
-      return credit_card unless credit_card.present? and credit_card.is_a?(Hash)
-      NfgRestClient::CreditCard.new(credit_card)
-    end
   end
 end

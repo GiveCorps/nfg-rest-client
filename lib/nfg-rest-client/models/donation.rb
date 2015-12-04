@@ -1,7 +1,7 @@
 module NfgRestClient
   class Donation < BaseTransaction
 
-    verbose! # comment this out or set to false to turn off verbose reporting
+    # verbose! # comment this out or set to false to turn off verbose reporting
     self.base_url base_nfg_service_url
 
     def initialize(attrs={})
@@ -39,19 +39,5 @@ module NfgRestClient
     end
 
     post :create, '/donation'
-
-    private
-
-    def instantiate_donation_line_items(donation_line_items)
-      return unless donation_line_items.present? && donation_line_items.is_a?(Array)
-      donation_line_items.map do |donation_line_item_hash|
-        NfgRestClient::DonationLineItem.new(donation_line_item_hash)
-      end
-    end
-
-    def instantiate_payment_method(payment_method)
-      return payment_method unless payment_method.present? && payment_method.is_a?(Hash)
-      "NfgRestClient::#{payment_method["source"]}Payment".constantize.new(payment_method)
-    end
   end
 end

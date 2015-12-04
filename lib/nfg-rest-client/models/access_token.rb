@@ -12,6 +12,10 @@ module NfgRestClient
 
     post :create, "/token"
 
+    validates :userid, presence: true
+    validates :password, presence: true
+    validates :scope, presence: true
+
     private
 
     def request_type

@@ -2,10 +2,6 @@ require "spec_helper"
 
 shared_examples_for "a donation object" do
 
-  context "when passing in a hash of attributes" do
-
-  end
-
   it "should be valid if all of the keys are present and have appropriate values" do
     donation.valid?
     expect(donation).to be_valid
