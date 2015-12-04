@@ -11,6 +11,14 @@ module NfgRestClientStubs
     stub_successful_create_action(path: "/service/rest/donation", body: NfgRestClientStubs::RequestResponses.donation_success.to_json)
   end
 
+  def stub_successful_card_on_file
+    stub_successful_create_action(path: "/service/rest/cardOnFile", body: NfgRestClientStubs::RequestResponses.card_on_file_success.to_json)
+  end
+
+  def stub_unsuccessful_card_on_file
+    stub_successful_create_action(path: "/service/rest/cardOnFile", body: NfgRestClientStubs::RequestResponses.card_on_file_failure.to_json)
+  end
+
   def stub_successful_create_action(options)
     stub_create_action(options.merge(status: 200))
   end
@@ -50,6 +58,28 @@ module NfgRestClientStubs
         "chargeId" => 0,
         "cardOnFileId" => 0
       }.merge(options)
+    end
+
+    def self.card_on_file_success(options ={})
+      {
+        "status" => "Success",
+        "message" => "",
+        "errorDetails" => [],
+        "callDuration" => 1.05423,
+        "donorToken" => "802f365c-ed3d-4c80-8700-374aee6ac62c",
+        "cardOnFileId" => 13338
+      }
+    end
+
+    def self.card_on_file_failure(options = {})
+      {
+        "status" => "ChargeFailed",
+        "message" => "",
+        "errorDetails" => [],
+        "callDuration" => 1.05423,
+        "donorToken" => "802f365c-ed3d-4c80-8700-374aee6ac62c",
+        "cardOnFileId" => 0
+      }
     end
   end
 end
