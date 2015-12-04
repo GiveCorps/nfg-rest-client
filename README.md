@@ -189,9 +189,9 @@ Donation params can be in the form of a hash:
   }
 }
 ````
-The keys in the hash can be underscored or camelcased (with the first character lower cased)
+The keys in the hash can be underscored ("credit_card") or camel cased ("creditCard" with the first character lower cased). Once the object is initialized, all attributes will use the camel case format.
 
-You can also build the donation object from individual objects:
+You can also build the donation object from individual objects or any mixture of hash key/values and NfgRestClient objects:
 
 ````ruby
 donation_line_item = NfgRestClient::DonationLineItem.new(donation_line_item_params)
@@ -224,6 +224,69 @@ i.e.
 credit_card = NfgRestClient::CreditCard.new(credit_card_params)
 credit_card.valid?
 ````
+
+#### Using a Card On File
+
+To use a card on file, you must first create one at NFG. There are two ways to do this.
+1. When sending a credit card donation, you can set the payment's storeCardOnFile to true:
+````ruby
+credit_card_payment = NfgRestClient::CreditCardPayment.new(credit_card_payment_params)
+credit_card_payment.storeCardOnFile = true
+# use credit_card_payment in a donation
+````
+The results will include a cardOnFileId, (donation.cardOnFile) which you would need to store to use later.
+
+2. By sending a separate CardOnFile create request:
+````ruby
+card_on_file = NfgRestClient::CardOnFile.new(card_on_file_params)
+if !card_on_file.valid?
+  # handle invalid card_on_file params
+  flash[:error] = card_on_file.full_error_messages
+else
+  card_on_file.create
+  if card_on_file.successful?
+    # perform successful card_on_file operations
+    donor.card_on_file_id = card_on_file.cardOnFileId
+  else
+    # perform unsuccessful card_on_file operations
+  end
+end
+````
+
+The card on file params:
+````ruby
+{
+  "donor" => {
+      "ip" => "216.7.145.0",
+      "token" => "802f365c-ed3d-4c80-8700-374aee6ac62c",
+      "first_name" => "Francis",
+     "last_name" => "Carter",
+     "email" => "FrancisGCarter@teleworm.us",
+     "phone" => "954-922-6971",
+     "billing_address" => {
+       "street1" => "3731 Pointe Lane",
+       "city" => "Hollywood",
+       "state" => "FL",
+       "postal_code" => "33020",
+       "country" => "US"
+     }
+   },
+   "creditCard" => {
+     "nameOnCard" => "Francis G. Carter",
+     "type" => "Visa",
+     "number" => "4111111111111111",
+     "expiration" => {
+       "month" => 11,
+       "year" => 2019
+     },
+     "securityCode" => "123"
+   }
+}
+````
+
+As with the other params, the hash can have underscored or camel cased keys, or a mixture of them.
+
+###
 
 ## Development
 
