@@ -21,6 +21,10 @@ Or install it yourself as:
 
 ### Obtaining a partner account at NetworkforGood
 
+Please thoroughly review the docs at http://docs.networkforgoodapi.apiary.io/#introduction/working-with-network-for-good for detailed information on obtaining partner credentials for Network For Good, working with the API, and PCI-compliance requirements and recommendations.
+
+The apiary documentation also includes detailed information about the api, along with additional endpoints that may not yet have been implemented in this ruby wrapper.
+
 ### Generate the configuration initializer
 
 To generate the configuration initializer, run
@@ -101,6 +105,125 @@ curl --include \
 }" \
 'https://api.networkforgood.org/access/rest/token'
 ```
+
+### Creating a Donation
+
+There are two methods for using the API to create donations. You can do so with credit card information, or with a previously saved card on file.
+
+#### Using credit card information.
+
+To create a donation using credit card information, perform the following:
+
+````ruby
+donation = NfgRestClient.donation.new(donation_params)
+if !donation.valid?
+  # handle invalid donation params
+  flash[:error] = donation.full_error_messages
+else
+  donation.create
+  if donation.successful?
+    # perform successful donation operations
+  else
+    # perform unsuccessful donation operations
+  end
+end
+````
+
+The create method will also call valid?, so you can skip the separate step
+
+Donation params can be in the form of a hash:
+````ruby
+{
+  "donationLineItems" => [{
+      "organizationId" => "590624430",
+      "organizationIdType" => "Ein",
+      "designation" => "Project A",
+      "dedication" => "In honor of grandma",
+      "donorPrivacy" => "ProvideAll",
+      "amount" => "12.00",
+      "feeAddOrDeduct" => "Deduct",
+      "transactionType" => "Donation",
+      "recurrence" => "NotRecurring"
+  },
+  {
+      "organizationId" => "510126000486",
+      "organizationIdType" => "NcesSchoolId",
+      "designation" => "Gym",
+      "donorPrivacy" => "ProvideNameAndEmailOnly",
+      "amount" => "47.00",
+      "feeAddOrDeduct" => "Add",
+      "transactionType" => "Donation"
+  }],
+  "totalAmount" => 60.41,
+  "tipAmount" => 0,
+  "partnerTransactionId" => "1bf1c16c-fdb7-4579-abab-738dbbe852ed",
+  "payment" => {
+      "source" => "CreditCard",
+      "storeCardOnFile" => "true",
+      "donor" => {
+          "ip" => "216.7.145.0",
+          "token" => "802f365c-ed3d-4c80-8700-374aee6ac62c",
+          "firstName" => "Francis",
+         "lastName" => "Carter",
+         "email" => "FrancisGCarter@teleworm.us",
+         "phone" => "954-922-6971",
+         "billingAddress" => {
+           "street1" => "3731 Pointe Lane",
+           "city" => "Hollywood",
+           "state" => "FL",
+           "postalCode" => "33020",
+           "country" => "US"
+         }
+       },
+       "creditCard" => {
+         "nameOnCard" => "Francis G. Carter",
+         "type" => "Visa",
+         "number" => "4111111111111111",
+         "expiration" => {
+           "month" => 11,
+           "year" => 2019
+         },
+         "securityCode" => "123"
+       }
+
+  }
+}
+````
+The keys in the hash can be underscored or camelcased (with the first character lower cased)
+
+You can also build the donation object from individual objects:
+
+````ruby
+donation_line_item = NfgRestClient::DonationLineItem.new(donation_line_item_params)
+credit_card = NfgRestClient::CreditCard.new(credit_card_params)
+donor = NfgRestClient::CreditCardDonor.new(donor_params)
+credit_card_payment = NfgRestClient::CreditCardPayment.new("donor" => donor, "credit_card" => credit_card)
+donation = NfgRestClient::Donation.new(
+  {
+    "donation_line_items" => [donation_line_item],
+    "total_amount" => 60.41, #in dollars with 2 decimal cents
+    "tip_amount" => 0,
+    "partner_transaction_id" => "your_systems_order_number",
+    "payment" => credit_card_payment
+  }
+)
+donation.create
+if donation.successful?
+  # handle successful donation
+  order.charge_id = donation.chargeId
+else
+  # handle unsuccessful donation
+  flash[:errors] = donation.response_error_details
+end
+````
+
+Each of the individual components have their own validations. So you can verify that the credit card information has non-invalid parameters before building your donation object
+
+i.e.
+````ruby
+credit_card = NfgRestClient::CreditCard.new(credit_card_params)
+credit_card.valid?
+````
 
 ## Development
 
