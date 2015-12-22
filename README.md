@@ -33,7 +33,7 @@ To generate the configuration initializer, run
   rails g nfg_rest_client:install
 ```
 
-This will generate an config/initializers/nfg_rest_client.rb file containing the following:
+This will generate a config/initializers/nfg_rest_client.rb file containing the following:
 
 ```ruby
 # Set your NetworkForGood authorization credentials here
@@ -54,7 +54,7 @@ NfgRestClient::Base.token = "your nfg token"
 # it is expected that all requests will be against
 # the NFG production servers. In all other environments
 # the gem will use the sandbox servers
-if Rails.env == "Production"
+if Rails.env.production?
   NfgRestClient::Base.use_sandbox = false
 end
 ```
@@ -292,6 +292,14 @@ As with the other params, the hash can have underscored or camel cased keys, or 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To run the remote tests you will ned to do the following:
+1. Obtain sandbox credentials from Network for Good.
+2. Update the `spec_helper_remote.rb` file with these credentials
+3. Run just the access token spec (`rspec spec\remote\access_token_spec.rb`) to obtain an access token.
+4. Updte the `spec_helper_remote.rb` file with your access token.
+
+Then you can run all of the tests with `rspec spec\remote`, though it is likely better to run them one at a time.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 

@@ -17,6 +17,6 @@ NfgRestClient::Base.token = "your nfg token"
 # it is expected that all requests will be against
 # the NFG production servers. In all other environments
 # the gem will use the sandbox servers
-if Rails.env == "Production"
+if Rails.env.production?
   NfgRestClient::Base.use_sandbox = false
 end
