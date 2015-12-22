@@ -7,12 +7,11 @@ module NfgRestClient
     end
 
     validates :ip, presence: true
+    validates :billingAddress, presence: true
     validates :firstName, presence: true
     validates :lastName, presence: true
-    validates :billingAddress, presence: true
     validates :token, presence: true
     validates :email, presence: true
-
     validates :billingAddress do |object, field_name, billing_address|
       next if billing_address.nil?
       unless billing_address.valid?

@@ -6,7 +6,7 @@ describe NfgRestClient::CardOnFile do
   let(:attributes) { card_on_file_attributes }
 
   it { validate_presence_of card_on_file, :donor }
-  it { validate_presence_of card_on_file, :credit_card }
+  it { validate_presence_of card_on_file, :creditCard }
 
   it "should instantiate the donor model" do
     donor = NfgRestClient::CreditCardDonor.new(donation_donor_attributes)

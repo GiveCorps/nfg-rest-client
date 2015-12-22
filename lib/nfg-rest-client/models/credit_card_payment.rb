@@ -3,7 +3,7 @@ module NfgRestClient
     def initialize(attrs = {})
       super
       self.storeCardOnFile = false if storeCardOnFile.nil?
-      self.donor = instantiate_donor(donor)
+      self.donor = instantiate_credit_card_donor(donor)
       self.creditCard = instantiate_credit_card(creditCard)
     end
 

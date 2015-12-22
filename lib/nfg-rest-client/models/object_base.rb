@@ -20,9 +20,14 @@ module NfgRestClient
       "NfgRestClient::#{payment_method["source"]}Payment".constantize.new(payment_method)
     end
 
-    def instantiate_donor(donor)
+    def instantiate_credit_card_donor(donor)
       return donor unless donor.present? && donor.is_a?(Hash)
       NfgRestClient::CreditCardDonor.new(donor)
+    end
+
+    def instantiate_base_donor(donor)
+      return donor unless donor.present? && donor.is_a?(Hash)
+      NfgRestClient::BaseDonor.new(donor)
     end
 
     def instantiate_credit_card(credit_card)
