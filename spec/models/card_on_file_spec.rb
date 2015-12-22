@@ -17,7 +17,7 @@ describe NfgRestClient::CardOnFile do
   it "should instantiate the credit card model" do
     credit_card = NfgRestClient::CreditCard.new(donation_credit_card_attributes)
     NfgRestClient::CreditCard.expects(:new).returns(credit_card)
-    NfgRestClient::CardOnFile.new(attributes)
+    expect(card_on_file.creditCard).to eq(credit_card)
   end
 
 end

@@ -5,11 +5,11 @@ module NfgRestClient
     def initialize(attrs = {})
       super
       self.donor = instantiate_donor(donor)
-      self.credit_card = instantiate_credit_card(creditCard)
+      self.creditCard = instantiate_credit_card(creditCard)
     end
 
     validates :donor, presence: true
-    validates :credit_card, presence: true
+    validates :creditCard, presence: true
 
     post :create, '/cardOnFile'
 
