@@ -4,8 +4,6 @@ describe NfgRestClient::BillingAddress do
   include NfgRestClient::SpecAttributes
   let(:billing_address) { NfgRestClient::BillingAddress.new(attributes) }
   let(:attributes) { donation_billing_address_attributes }
-  # let(:state) { "FL" }
-  # let(:country) { "US" }
 
   it { validate_presence_of billing_address, :street1 }
   it { validate_presence_of billing_address, :city }

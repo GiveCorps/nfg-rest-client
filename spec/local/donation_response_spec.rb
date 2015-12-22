@@ -11,6 +11,10 @@ shared_examples_for "a donation transaction" do
     it "should return a chargeID" do
       expect(donation.chargeID).not_to eq(0)
     end
+
+    it "should indicated that it is successful" do
+      expect(donation.successful?).to be
+    end
   end
 
   context "when the response indicates an unsuccessful transaction" do
@@ -25,6 +29,14 @@ shared_examples_for "a donation transaction" do
 
     it "should have a chargeId of 0" do
       expect(donation.chargeId).to eq(0)
+    end
+
+    it "should indicated that it is not successful" do
+      expect(donation.successful?).not_to be
+    end
+
+    it "should put the error details in an easy to consume format" do
+      expect(donation.response_error_details).to eq("InvalidCreditCardNumber: Credit card checksum validation failed")
     end
   end
 end

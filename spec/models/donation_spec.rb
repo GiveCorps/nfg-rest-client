@@ -40,6 +40,46 @@ shared_examples_for "a donation object" do
       expect(donation.errors[:donationLineItems]).to be_present
     end
   end
+
+
+  context "when donation items' feeAddOrDeduct are 'Deduct' " do
+    context "and the donation total equals the sum of all of the donation items amounts" do
+      it "should be valid" do
+        expect(subject.send(:calculated_total)).to eq(total_amount.to_f)
+        expect(donation.valid?).to be_truthy
+      end
+    end
+
+    context "and the donation total does not equal the sum of all of the donation item amounts" do
+      let(:total_amount) { "200.00" }
+      it "should not be valid" do
+        expect(subject.send(:calculated_total)).not_to eq(total_amount.to_f)
+        expect(donation.valid?).to be_falsey
+      end
+    end
+  end
+
+  context "when at least one of the donation items' feeAddOrDeduct are 'Add' " do
+    let(:add_or_deduct_1) { "Add" }
+    let(:add_or_deduct_fee_amount) { "0.75" }
+    let(:total_amount) { "100.75" }
+    let(:attributes) { donation_attributes("add_or_deduct_fee_amount" => add_or_deduct_fee_amount) }
+
+    context "and the donation total equals the sum of all of the donation items amounts plus the addOrDeductFeeAmount" do
+      it "should be valid" do
+        expect(subject.send(:calculated_total)).to eq(total_amount.to_f)
+        expect(donation.valid?).to be_truthy
+      end
+    end
+
+    context "and the donation total does not equal the sum of all of the donation item amounts" do
+      let(:total_amount) { "200.00" }
+      it "should not be valid" do
+        expect(subject.send(:calculated_total)).not_to eq(total_amount.to_f)
+        expect(donation.valid?).to be_falsey
+      end
+    end
+  end
 end
 
 describe NfgRestClient::Donation do

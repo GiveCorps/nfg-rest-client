@@ -19,6 +19,26 @@ module NfgRestClient::SpecAttributes
     "FL"
   end
 
+  def security_code
+    "123"
+  end
+
+  def add_or_deduct_1
+    "Deduct"
+  end
+
+  def add_or_deduct_2
+    "Deduct"
+  end
+
+  def total_amount
+    "100.00"
+  end
+
+  def card_on_file_id
+    1096597
+  end
+
   def donation_attributes(items_to_be_merged = {}, style = 'underscore')
     (style == 'underscore' ? donation_attributes_hash : donation_attributes_hash.inject({}) { |memo, (k, v)| memo[k.camelcase(:lower)] = v; memo })
     .merge(style == 'underscore' ? items_to_be_merged : items_to_be_merged.inject({}) { |memo, (k, v)| memo[k.camelcase(:lower)] = v; memo })
@@ -27,7 +47,7 @@ module NfgRestClient::SpecAttributes
   def donation_attributes_hash(donation_credit_card_payment = donation_credit_card_payment_attributes)
     {
       "donation_line_items" => donation_line_items,
-      "total_amount" => 100,
+      "total_amount" => total_amount,
       "tip_amount" => 0.0,
       "partner_transaction_id" => "__unique_transaction_id__",
       "payment" => donation_credit_card_payment
@@ -40,8 +60,8 @@ module NfgRestClient::SpecAttributes
       "designation" => "Project A",
       "dedication" => "In honor of grandma",
       "donorPrivacy" => "ProvideAll",
-      "amount" => "12.00",
-      "feeAddOrDeduct" => "Deduct",
+      "amount" => "50.00",
+      "feeAddOrDeduct" => add_or_deduct_1,
       "transactionType" => "Donation",
       "recurrence" => "NotRecurring"
     }
@@ -51,8 +71,8 @@ module NfgRestClient::SpecAttributes
     {  "organizationId" => "590624430",
       "organizationIdType" => "Ein",
       "designation" => "Project A",
-      "amount" => "12.00",
-      "feeAddOrDeduct" => "Deduct",
+      "amount" => "50.00",
+      "feeAddOrDeduct" => add_or_deduct_2,
       "transactionType" => "Donation",
     }
   end
@@ -60,7 +80,7 @@ module NfgRestClient::SpecAttributes
   def card_on_file_payment
     {
       "source" => "CardOnFile",
-      "cardOnFileId" => 1096597,
+      "cardOnFileId" => card_on_file_id,
       "donor" => {
         "ip" => "50.121.129.54",
         "token" => "802f365c-ed3d-4c80-8700-374aee6ac62c"
@@ -104,7 +124,7 @@ module NfgRestClient::SpecAttributes
       "month" => 11,
       "year" => 2019
       },
-    "securityCode" => "123"
+    "securityCode" => security_code
     }
   end
 
