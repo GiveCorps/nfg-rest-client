@@ -8,6 +8,7 @@ module NfgRestClient
       super
       self.donationLineItems = instantiate_donation_line_items(self.donationLineItems)
       self.payment = instantiate_payment_method(self.payment)
+      self.addOrDeductFeeAmount = 0 unless addOrDeductFeeAmount.present?
     end
 
     validates :donationLineItems, presence: true
@@ -38,6 +39,23 @@ module NfgRestClient
       end
     end
 
+    validates :totalAmount do |object, field_name, total_amount|
+      unless total_amount.to_f == object.send(:calculated_total)
+        object._errors[field_name] << "is not equal to the sum of donation line item amounts"
+      end
+    end
+
     post :create, '/donation'
+
+    private
+
+    def total_from_line_items
+      return 0 unless donationLineItems.present?
+      donationLineItems.inject(0) { |total, dli| total + dli.amount.to_f }
+    end
+
+    def calculated_total
+      total_from_line_items + addOrDeductFeeAmount.to_f
+    end
   end
 end
