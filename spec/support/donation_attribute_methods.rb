@@ -82,8 +82,10 @@ module NfgRestClient::SpecAttributes
       "source" => "CardOnFile",
       "cardOnFileId" => card_on_file_id,
       "donor" => {
-        "ip" => "50.121.129.54",
-        "token" => "802f365c-ed3d-4c80-8700-374aee6ac62c"
+        "token" => "802f365c-ed3d-4c80-8700-374aee6ac62c",
+        "firstName" => "Francis",
+        "lastName" => "Carter",
+        "email" => "FrancisGCarter@teleworm.us"
         }
     }
   end

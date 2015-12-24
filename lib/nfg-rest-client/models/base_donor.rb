@@ -3,6 +3,7 @@ module NfgRestClient
 
     def initialize(attrs = {})
       super
+      self.ip = "127.0.0.1" unless ip.present?
     end
 
     validates :firstName, presence: true

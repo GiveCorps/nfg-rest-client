@@ -6,7 +6,7 @@ describe NfgRestClient::CreditCardPayment do
   it { validate_presence_of credit_card_payment, :source }
   it { validate_presence_of credit_card_payment, :donor }
   it { validate_presence_of credit_card_payment, :creditCard }
-  it { validate_inclusion_of credit_card_payment, :source, { in: %w{CreditCard CardOnFile}}}
+  it { validate_inclusion_of credit_card_payment, :source, { in: %w{CreditCard}}}
 
   describe "CreditCardDonor" do
     it "should instantiate a donor object if donor information is present and should validate it when validating the credit card payment object" do

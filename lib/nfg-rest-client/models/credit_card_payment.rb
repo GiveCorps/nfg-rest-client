@@ -7,7 +7,7 @@ module NfgRestClient
       self.creditCard = instantiate_credit_card(creditCard)
     end
 
-    validates :source, presence: true, inclusion: { in: %w{CreditCard CardOnFile} }
+    validates :source, presence: true, inclusion: { in: %w{CreditCard} }
     validates :donor, presence: true
     validates :creditCard, presence: true
 

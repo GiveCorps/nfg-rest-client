@@ -1,7 +1,7 @@
 module NfgRestClient
   class Donation < BaseTransaction
 
-    # verbose! # comment this out or set to false to turn off verbose reporting
+    verbose! # comment this out or set to false to turn off verbose reporting
     self.base_url base_nfg_service_url
 
     def initialize(attrs={})

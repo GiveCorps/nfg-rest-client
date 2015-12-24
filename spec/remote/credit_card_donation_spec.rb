@@ -68,6 +68,8 @@ describe NfgRestClient::Donation  do
 
       context "and the attempt is successful" do
         it "should have a status of success and return a chargeID with a non-zero value" do
+          p donation_attributes(changes_to_attributes,  "underscore")
+          p donation
           donation.create
           expect(donation.status).to eq("Success")
           expect(donation.chargeId.to_s).to match(charged_id_regex)
