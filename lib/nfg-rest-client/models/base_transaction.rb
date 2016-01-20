@@ -15,10 +15,18 @@ module NfgRestClient
       errorDetails.map { |error| "#{error['code']}: #{error["data"]}"}.join()
     end
 
+    def bearer_token= (token)
+      @token = token
+    end
+
+    def bearer_token
+      @token || self.class.token
+    end
+
     private
 
     def add_authentication_details(name, request)
-      request.headers["Authorization"] = "Bearer #{self.class.token}"
+      request.headers["Authorization"] = "Bearer #{request.object.bearer_token}"
     end
   end
 end
