@@ -11,20 +11,23 @@ module NfgRestClient
       @@token = nil
       @@campaign = "DNTAPI"
 
-      def use_sandbox
-        if @use_sandbox.nil?
-          @@use_sandbox
-        else
-          @use_sandbox
-        end
-      end
 
-      def use_sandbox=(value)
-        @@use_sandbox = value
+      def set_production_base_urls
+        @@use_sandbox = false
+        # the base_url needs to be set on each object because it is a class
+        # variable that is not inheritable and is different depending on the
+        # action being taken. When the NfgRestClient classes are loaded, the base_url
+        # is set to the sandbox (since often the class is loaded before initialization
+        # files are run). So we need to override that here. This method should
+        # be called in an initializer by the application only in a production
+        # environment
+        NfgRestClient::Donation.base_url NfgRestClient::Base.base_nfg_service_url
+        NfgRestClient::CardOnFile.base_url NfgRestClient::Base.base_nfg_service_url
+        NfgRestClient::AccessToken.base_url NfgRestClient::Base.base_nfg_access_url
       end
 
       def base_nfg_url
-        if use_sandbox
+        if @@use_sandbox
           @@sandbox_nfg_base_url
         else
           @@production_nfg_base_url
