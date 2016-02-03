@@ -12,11 +12,10 @@ NfgRestClient::Base.campaign = "nfg-campaign"
 # a sandbox and production token (they will be different)
 NfgRestClient::Base.token = "your nfg token"
 
-
 # When using the gem in a production environment
 # it is expected that all requests will be against
 # the NFG production servers. In all other environments
-# the gem will use the sandbox servers
+# the gem will use the sandbox servers, which are set by default
 if Rails.env.production?
-  NfgRestClient::Base.use_sandbox = false
+  NfgRestClient::Base.set_production_base_urls
 end
