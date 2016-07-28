@@ -14,9 +14,9 @@ module Flexirest
       prepare_params
       prepare_url
       if object_is_class?
-        @object.send(:_filter_request, :before, @method[:name], self)
+        @object.send(:_callback_request, :before, @method[:name], self)
       else
-        @object.class.send(:_filter_request, :before, @method[:name], self)
+        @object.class.send(:_callback_request, :before, @method[:name], self)
       end
       append_get_parameters
       prepare_request_body

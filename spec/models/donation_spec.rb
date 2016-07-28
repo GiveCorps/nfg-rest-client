@@ -170,4 +170,10 @@ describe NfgRestClient::Donation do
     end
   end
 
+  describe "#prepare_request" do
+    it "should return a formatted request" do
+      expect(donation.prepare_request(:create).class).to eq(Flexirest::Request)
+    end
+  end
+
 end
