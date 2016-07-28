@@ -8,7 +8,7 @@ module NfgRestClient
     end
 
     validates :organizationId, presence: true
-    validates :organizationIdType, presence: true, inclusion: { in: ["Ein", "NcesSchoolId"] }
+    validates :organizationIdType, presence: true, inclusion: { in: ["Ein", "NcesSchoolId", "V4AccountId", "V4OrganizationId"] }
     validates :donorPrivacy, presence: true, inclusion: { in: %w{ProvideAll ProvideNameAndEmailOnly Anonymous} }
     validates :amount, presence: true, numericality: { minimum: 1 }
     validates :feeAddOrDeduct, presence: true, inclusion: { in: %w{Add Deduct} }
