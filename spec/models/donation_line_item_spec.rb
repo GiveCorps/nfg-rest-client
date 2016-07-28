@@ -7,7 +7,7 @@ describe NfgRestClient::DonationLineItem do
   it { validate_presence_of donation_line_item, :organizationId }
 
   it { validate_presence_of donation_line_item, :organizationIdType }
-  it { validate_inclusion_of donation_line_item, :organizationIdType, in: ["Ein", "NcesSchoolId"] }
+  it { validate_inclusion_of donation_line_item, :organizationIdType, in: ["Ein", "NcesSchoolId", "V4AccountId", "V4OrganizationId"] }
 
   it { validate_presence_of donation_line_item, :donorPrivacy }
   it { validate_inclusion_of donation_line_item, :donorPrivacy, in: %w{ProvideAll ProvideNameAndEmailOnly Anonymous} }
