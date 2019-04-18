@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "byebug"
 
 
-  spec.add_dependency "activesupport", '~> 4.0'
+  spec.add_dependency "activesupport"
   spec.add_dependency "json"
   spec.add_dependency "flexirest"
 end
