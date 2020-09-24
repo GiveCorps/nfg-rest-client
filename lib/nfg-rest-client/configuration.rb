@@ -1,7 +1,7 @@
 module NfgRestClient
   module Configuration
     module ClassMethods
-      @@sandbox_nfg_base_url = "https://api-sandbox.networkforgood.org/:request_type/rest"
+      @@sandbox_nfg_base_url = "https://api-partner.networkforgood.org/:request_type/rest"
       @@production_nfg_base_url = "https://api.networkforgood.org/:request_type/rest"
       @@use_sandbox = true
       @@userid = nil
