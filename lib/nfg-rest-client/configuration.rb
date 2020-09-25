@@ -1,9 +1,10 @@
 module NfgRestClient
   module Configuration
     module ClassMethods
-      @@sandbox_nfg_base_url = "https://api-partner.networkforgood.org/:request_type/rest"
+      @@sandbox_nfg_base_url = "https://:domain_name/:request_type/rest"
       @@production_nfg_base_url = "https://api.networkforgood.org/:request_type/rest"
       @@use_sandbox = true
+      @@sandbox_domain_name = nil
       @@userid = nil
       @@password = nil
       @@source = nil
@@ -28,7 +29,7 @@ module NfgRestClient
 
       def base_nfg_url
         if @@use_sandbox
-          @@sandbox_nfg_base_url
+          @@sandbox_nfg_base_url.gsub ":domain_name", sandbox_domain_name
         else
           @@production_nfg_base_url
         end
@@ -133,6 +134,16 @@ module NfgRestClient
         NfgRestClient::Logger.info "\033[1;4;32m#{name}\033[0m token set..."
         value = CGI::escape(value) if value.present? && !value.include?("%")
         @@token = value
+      end
+
+      def sandbox_domain_name=(value)
+        NfgRestClient::Logger.info "\033[1;4;32m#{name}\033[0m sandbox domain name set..."
+        value = CGI::escape(value) if value.present? && !value.include?("%")
+        @@sandbox_domain_name = value
+      end
+
+      def sandbox_domain_name
+        @@sandbox_domain_name || 'api-sandbox.networkforgood.org'
       end
 
     end

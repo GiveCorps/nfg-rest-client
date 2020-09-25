@@ -12,6 +12,9 @@ NfgRestClient::Base.campaign = "nfg-campaign"
 # a sandbox and production token (they will be different)
 NfgRestClient::Base.token = "your nfg token"
 
+# set sandbox base domain name
+# NfgRestClient::Base.sandbox_domain_name = 'api-partner.networkforgood.org'
+
 # When using the gem in a production environment
 # it is expected that all requests will be against
 # the NFG production servers. In all other environments
