@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{ The nfg-rest-client is a ruby wrapper for NetworkforGood's restful api}
   spec.description   = %q{ The nfg-rest-client is a ruby wrapper for NetworkforGood's restful api}
-  spec.homepage      = "https://www.networkforgood.com"
+  spec.homepage      = "https://github.com/network-for-good/nfg-rest-client"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -33,9 +33,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "vcr"
   spec.add_development_dependency "webmock"
   spec.add_development_dependency "mocha"
+  spec.add_development_dependency "byebug"
 
 
-  spec.add_dependency "activesupport", '~> 4.0'
+  spec.add_dependency "activesupport"
   spec.add_dependency "json"
   spec.add_dependency "flexirest"
 end

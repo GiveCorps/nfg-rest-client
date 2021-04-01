@@ -7,7 +7,7 @@ module NfgRestClient
     end
 
     validates :nameOnCard, presence: true
-    validates :type, presence: true, inclusion: { in: %w{Visa Mastercard Amex} }
+    validates :type, presence: true, inclusion: { in: %w{Visa Mastercard Amex Discover} }
     validates :number, presence: true
     validates :expiration, presence: true
     validates :securityCode, presence: true
