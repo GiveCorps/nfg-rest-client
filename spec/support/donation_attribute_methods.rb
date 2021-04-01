@@ -124,7 +124,7 @@ module NfgRestClient::SpecAttributes
     "number" => "4111111111111111",
     "expiration" => {
       "month" => 11,
-      "year" => 2019
+      "year" => 2041
       },
     "securityCode" => security_code
     }

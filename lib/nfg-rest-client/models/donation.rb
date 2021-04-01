@@ -55,7 +55,7 @@ module NfgRestClient
     end
 
     def calculated_total
-      total_from_line_items + addOrDeductFeeAmount.to_f
+      (total_from_line_items.to_f + addOrDeductFeeAmount.to_f).floor(2)
     end
   end
 end

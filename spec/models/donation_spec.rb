@@ -79,6 +79,20 @@ shared_examples_for "a donation object" do
         expect(donation.valid?).to be_falsey
       end
     end
+
+    context "when the add_or_deduct_fee_amount is 0.6 and the donation line item total is 19.89" do
+      let(:attributes) { donation_attributes("add_or_deduct_fee_amount" => "0.60", "donation_line_items" => [full_donation_line_item_attributes.merge("amount" => "19.89")]) }
+      # in very specific circumstances, like when the total value of the donation is 19.89 and the total add fee is 0.60, when
+      # setting the strings to floats, and adding them together we get odd values, like 20.4900000002. We need to floor the values
+      # to ensure that we can properly compare them. This spec was to ensure that that floor worked.
+      context 'and the donation total equals the sum of all of the donation item amounts plus the addOrDeductFeeAmount' do
+        let(:total_amount) { "20.49" }
+
+        it 'is valid' do
+          expect(donation.valid?).to be_truthy
+        end
+      end
+    end
   end
 end
 
@@ -96,8 +110,8 @@ describe NfgRestClient::Donation do
   it { validate_presence_of donation, :payment }
 
   context "when provided an hash with underscore separated keys" do
-  let(:donation) { NfgRestClient::Donation.new(attributes) }
-  let(:attributes) { donation_attributes(changes_to_attributes,  "underscore") }
+    let(:donation) { NfgRestClient::Donation.new(attributes) }
+    let(:attributes) { donation_attributes(changes_to_attributes,  "underscore") }
 
     it_should_behave_like "a donation object"
   end
@@ -123,6 +137,7 @@ describe NfgRestClient::Donation do
       ] }
 
     let(:attributes) { donation_attributes_hash(credit_card_payment) }
+
     context "and all of the required values are present and valid" do
       it "should be valid" do
         expect(donation).to be_valid
