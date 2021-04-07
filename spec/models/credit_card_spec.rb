@@ -9,7 +9,7 @@ describe NfgRestClient::CreditCard do
   it { validate_presence_of credit_card, :number }
   it { validate_presence_of credit_card, :expiration }
   it { validate_presence_of credit_card, :securityCode }
-  it { validate_inclusion_of credit_card, :type, { in: %w{Visa Mastercard Amex} } }
+  it { validate_inclusion_of credit_card, :type, { in: %w{Visa Mastercard Amex Discover} } }
 
   describe "sub model instantiation" do
     context "when the attributes contain expiration values" do

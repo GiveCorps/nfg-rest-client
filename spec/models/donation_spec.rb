@@ -50,13 +50,15 @@ shared_examples_for "a donation object" do
       end
     end
 
-    context "and the donation total does not equal the sum of all of the donation item amounts" do
-      let(:total_amount) { "200.00" }
-      it "should not be valid" do
-        expect(subject.send(:calculated_total)).not_to eq(total_amount.to_f)
-        expect(donation.valid?).to be_falsey
-      end
-    end
+    # 2021-04-07 We've removed this validation as the floating point math was returning
+    # strange results.
+    # context "and the donation total does not equal the sum of all of the donation item amounts" do
+    #   let(:total_amount) { "200.00" }
+    #   it "should not be valid" do
+    #     expect(subject.send(:calculated_total)).not_to eq(total_amount.to_f)
+    #     expect(donation.valid?).to be_falsey
+    #   end
+    # end
   end
 
   context "when at least one of the donation items' feeAddOrDeduct are 'Add' " do
@@ -72,13 +74,13 @@ shared_examples_for "a donation object" do
       end
     end
 
-    context "and the donation total does not equal the sum of all of the donation item amounts" do
-      let(:total_amount) { "200.00" }
-      it "should not be valid" do
-        expect(subject.send(:calculated_total)).not_to eq(total_amount.to_f)
-        expect(donation.valid?).to be_falsey
-      end
-    end
+    # context "and the donation total does not equal the sum of all of the donation item amounts" do
+    #   let(:total_amount) { "200.00" }
+    #   it "should not be valid" do
+    #     expect(subject.send(:calculated_total)).not_to eq(total_amount.to_f)
+    #     expect(donation.valid?).to be_falsey
+    #   end
+    # end
 
     context "when the add_or_deduct_fee_amount is 0.6 and the donation line item total is 19.89" do
       let(:attributes) { donation_attributes("add_or_deduct_fee_amount" => "0.60", "donation_line_items" => [full_donation_line_item_attributes.merge("amount" => "19.89")]) }

@@ -39,11 +39,14 @@ module NfgRestClient
       end
     end
 
-    validates :totalAmount do |object, field_name, total_amount|
-      unless total_amount.to_f == object.send(:calculated_total)
-        object._errors[field_name] << "is not equal to the sum of donation line item amounts"
-      end
-    end
+    # this validation has turned out to be flaky. Even though the values
+    # appear to be correct, the floating point math causes them to be slightly
+    # different (i.e. 24.000000002 does not equal 24)
+    # validates :totalAmount do |object, field_name, total_amount|
+    #   unless total_amount.to_f == object.send(:calculated_total)
+    #     object._errors[field_name] << "is not equal to the sum of donation line item amounts"
+    #   end
+    # end
 
     post :create, '/donation'
 
