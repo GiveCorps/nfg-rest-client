@@ -1,6 +1,11 @@
 module NfgRestClient
-  module SpecAttributes
+  # a module that can be included when writing specs in the enclosing
+  # application that provides a set of helpers matching values and 
+  # attributes in the NfgRestClient interface. 
 
+  # To use them, add an `include NfgRestClient::SpecAttributes` within a
+  # describe statement
+  module SpecAttributes
     def changes_to_attributes
       {}
     end
